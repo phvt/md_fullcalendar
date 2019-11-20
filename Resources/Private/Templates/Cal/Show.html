@@ -2,20 +2,22 @@
 	<f:layout name="Default" />
 
 	<f:section name="content">
-		<f:if condition="{categories}">
-			<label for="categoryFilter{contentObject.uid}">{f:translate(key: 'filter_calendars', extensionName: 'MdFullcalendar')}</label>
-			<div class="input-group mb-3">
-				<select id="categoryFilter{contentObject.uid}" class="form-control">
-					<option value="">{f:translate(key: 'all_calendars', extensionName: 'MdFullcalendar')}</option>
-					<f:for each="{categories}" as="category">
-						<option value="category{category.uid}" class="category{category.uid}">{category.title}</option>
-					</f:for>
-				</select>
-			</div>
-		</f:if>
+		<div class="row">
+			<!-- Calendar -->
+			<div id="calendar{contentObject.uid}" class="col-md-{f:if(condition: '{categories}', then: '9', else: '12')}"></div>
 
-		<!-- Calendar -->
-		<div id="calendar{contentObject.uid}"></div>
+			<f:if condition="{categories}">
+				<div id="categoryFilter{contentObject.uid}" class="category-filter col-md-3">
+					<p>{f:translate(key: 'filter_calendars', extensionName: 'MdFullcalendar')}</p>
+					<f:for each="{categories}" as="category">
+						<div class="form-check category{category.uid}">
+							<input type="checkbox" value="category{category.uid}" name="categoryFilter{contentObject.uid}" class="form-check-input" id="cf{contentObject.uid}_{category.uid}">
+							<label class="form-check-label" for="cf{contentObject.uid}_{category.uid}">{category.title}</label>
+						</div>
+					</f:for>
+				</div>
+			</f:if>
+		</div>
 
 		<!-- Modal -->
 		<div class="modal fade" id="calModal{contentObject.uid}" tabindex="-1" role="dialog" aria-labelledby="calModalLabel" aria-hidden="true">
@@ -75,27 +77,25 @@
 								});
 							});
 						}
-
-						// FILTER
-						// initially show all items
-						$(item.el).removeClass('d-none');
-
-						// get category filter
-						var selectedCategory = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> option:selected').val();
-						if(typeof selectedCategory !== 'undefined' && selectedCategory != '') {
-							if ( !$(item.el).hasClass(selectedCategory) ) {
-								$(item.el).addClass('d-none');
-							}
-						}
 					},
 				});
 
+				// render calendar
 				calendar<f:format.raw>{contentObject.uid}</f:format.raw>.render();
 
-				$('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw>').on('change', function() {
-					if (this.value != '') {
+				// category filter
+				$('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> [type=checkbox]').on('change', function() {
+					var selectedCategories = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> input:checked').map(function(){
+						return $(this).val();
+					}).get();
+
+					if (selectedCategories.length > 0) {
+						// initially hide all elements
 						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .cal-item').addClass('d-none');
-						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .' + this.value).removeClass('d-none');
+
+						selectedCategories.forEach(function(selectedVal) {
+							$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .' + selectedVal).removeClass('d-none');
+						});
 					} else {
 						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .cal-item').removeClass('d-none');
 					}
