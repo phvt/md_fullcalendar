@@ -18,7 +18,7 @@
 		<div id="calendar{contentObject.uid}"></div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="calModal" tabindex="-1" role="dialog" aria-labelledby="calModalLabel" aria-hidden="true">
+		<div class="modal fade" id="calModal{contentObject.uid}" tabindex="-1" role="dialog" aria-labelledby="calModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-content-inner"></div>
@@ -32,7 +32,7 @@
 		<script type="text/javascript">
 			document.addEventListener('DOMContentLoaded', function() {
 				var calendarEl<f:format.raw>{contentObject.uid}</f:format.raw> = document.getElementById('calendar<f:format.raw>{contentObject.uid}</f:format.raw>');
-				var calModal = $('#calModal');
+				var calModal = $('#calModal<f:format.raw>{contentObject.uid}</f:format.raw>');
 
 				var calendar<f:format.raw>{contentObject.uid}</f:format.raw> = new FullCalendar.Calendar(calendarEl<f:format.raw>{contentObject.uid}</f:format.raw>, {
 					firstDay: 1,
