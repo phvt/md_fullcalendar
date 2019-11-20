@@ -76,11 +76,11 @@
 				<dl class="dl-horizontal meta">
 					<f:if condition="{event.location}">
 						<dt><f:translate key="tx_calendarize_domain_model_event.location" extensionName="Calendarize" />:</dt>
-						<dd>{event.location}</dd>
+						<dd><f:link.typolink parameter="{event.locationLink}">{event.location}</f:link.typolink></dd>
 					</f:if>
 					<f:if condition="{event.organizer}">
 						<dt><f:translate key="tx_calendarize_domain_model_event.organizer" extensionName="Calendarize" />:</dt>
-						<dd>{event.organizer}</dd>
+						<dd><f:link.typolink parameter="{event.organizerLink}">{event.organizer}</f:link.typolink></dd>
 					</f:if>
 				</dl>
 
