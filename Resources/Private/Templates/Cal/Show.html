@@ -1,0 +1,107 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:layout name="Default" />
+
+	<f:section name="content">
+		<f:if condition="{categories}">
+			<label for="categoryFilter{contentObject.uid}">{f:translate(key: 'filter_calendars', extensionName: 'MdFullcalendar')}</label>
+			<div class="input-group mb-3">
+				<select id="categoryFilter{contentObject.uid}" class="form-control">
+					<option value="">{f:translate(key: 'all_calendars', extensionName: 'MdFullcalendar')}</option>
+					<f:for each="{categories}" as="category">
+						<option value="category{category.uid}" class="category{category.uid}">{category.title}</option>
+					</f:for>
+				</select>
+			</div>
+		</f:if>
+
+		<!-- Calendar -->
+		<div id="calendar{contentObject.uid}"></div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="calModal" tabindex="-1" role="dialog" aria-labelledby="calModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-content-inner"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{f:translate(key: 'close', extensionName: 'MdFullcalendar')}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			document.addEventListener('DOMContentLoaded', function() {
+				var calendarEl<f:format.raw>{contentObject.uid}</f:format.raw> = document.getElementById('calendar<f:format.raw>{contentObject.uid}</f:format.raw>');
+				var calModal = $('#calModal');
+
+				var calendar<f:format.raw>{contentObject.uid}</f:format.raw> = new FullCalendar.Calendar(calendarEl<f:format.raw>{contentObject.uid}</f:format.raw>, {
+					firstDay: 1,
+					<f:format.raw>{f:if(condition: '{settings.language}', then: 'locale: \'{settings.language}\',')}</f:format.raw>
+					plugins: ['dayGrid', 'timeGrid'],
+					defaultView: '<f:format.raw>{settings.view}</f:format.raw>',
+					header: {
+						left: 'prev,next today',
+						center: 'title',
+						right: 'dayGridMonth,timeGridWeek,timeGridDay'
+					},
+					//editable: true, // this needs 'interaction' plugin
+					eventLimit: true, // when too many events in a day, show the popover
+					navLinks: true,
+					fixedWeekCount: false,
+					//showNonCurrentDates: false, // In month view, whether dates in the previous or next month should be rendered at all.
+					events: {
+						url: '/index.php?id=<f:format.raw>{contentObject.pid}</f:format.raw>&type=1573738558',
+						failure: function(request, status, error) {
+							alert('There was an error while fetching events!');
+						},
+					},
+					eventRender: function(item) {
+						// add title attribute
+						$(item.el).prop('title', item.event.extendedProps.abstract);
+
+						if (typeof $.fn.modal === 'function' && $.fn.modal !== null) {
+							// add click event for modal
+							$(item.el).on('click', function(e) {
+								e.preventDefault();
+								$(document.body).css({'cursor' : 'wait'});
+
+								$.ajax({
+									url: item.event.extendedProps.uriAjax,
+									success: function(result){
+										calModal.find('.modal-content-inner').html(result);
+										calModal.modal('show');
+										$(document.body).css({'cursor' : ''});
+									}
+								});
+							});
+						}
+
+						// FILTER
+						// initially show all items
+						$(item.el).removeClass('d-none');
+
+						// get category filter
+						var selectedCategory = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> option:selected').val();
+						if(typeof selectedCategory !== 'undefined' && selectedCategory != '') {
+							if ( !$(item.el).hasClass(selectedCategory) ) {
+								$(item.el).addClass('d-none');
+							}
+						}
+					},
+				});
+
+				calendar<f:format.raw>{contentObject.uid}</f:format.raw>.render();
+
+				$('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw>').on('change', function() {
+					if (this.value != '') {
+						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .cal-item').addClass('d-none');
+						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .' + this.value).removeClass('d-none');
+					} else {
+						$('#calendar<f:format.raw>{contentObject.uid}</f:format.raw> .cal-item').removeClass('d-none');
+					}
+				});
+
+			});
+		</script>
+	</f:section>
+</html>

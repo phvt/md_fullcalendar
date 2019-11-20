@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-11-14T10:40:11Z" product-name="md_fullcalendar">
+		<header/>
+		<body>
+			<trans-unit id="tx_mdfullcalendar_domain_model_cal">
+				<source>Cal</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.tx_extbase_type.Tx_MdFullcalendar_Cal">
+				<source>FullCalendar.io for  Calendarize Cal</source>
+			</trans-unit>
+			<trans-unit id="tx_md_fullcalendar_cal.name">
+				<source>FullCalendar for ext:calendarize</source>
+			</trans-unit>
+			<trans-unit id="tx_md_fullcalendar_cal.description">
+				<source>Show the FullCalendar.io with data from ext:calendarize.</source>
+			</trans-unit>
+
+			<trans-unit id="flexform.parent_category">
+				<source>Parent category for filter</source>
+			</trans-unit>
+			<trans-unit id="flexform.view">
+				<source>Calendar view</source>
+			</trans-unit>
+			<trans-unit id="flexform.view.dayGridMonth">
+				<source>Month</source>
+			</trans-unit>
+			<trans-unit id="flexform.view.timeGridWeek">
+				<source>Week</source>
+			</trans-unit>
+			<trans-unit id="flexform.view.timeGridDay">
+				<source>Day</source>
+			</trans-unit>
+			<trans-unit id="flexform.language">
+				<source>Language of calendar</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

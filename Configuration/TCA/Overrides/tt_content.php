@@ -1,0 +1,26 @@
+<?php
+defined('TYPO3_MODE') || die();
+
+call_user_func(
+    function()
+    {
+        /**
+         * Register plugin
+         */
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'Mediadreams.MdFullcalendar',
+            'Cal',
+            'LLL:EXT:md_fullcalendar/Resources/Private/Language/locallang_db.xlf:tx_md_fullcalendar_cal.name'
+        );
+
+        /**
+         * Load flexform for cal plugin
+         */
+        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['mdfullcalendar_cal'] = 'pi_flexform';
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+            'mdfullcalendar_cal',
+            'FILE:EXT:md_fullcalendar/Configuration/FlexForms/CalPlugin.xml'
+        );
+
+    }
+);

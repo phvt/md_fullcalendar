@@ -1,0 +1,106 @@
+
+plugin.tx_mdfullcalendar_cal {
+    view {
+        templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_mdfullcalendar_cal.view.templateRootPath}
+        partialRootPaths.0 = EXT:md_fullcalendar/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_mdfullcalendar_cal.view.partialRootPath}
+        layoutRootPaths.0 = EXT:tx_mdfullcalendar/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_mdfullcalendar_cal.view.layoutRootPath}
+    }
+
+    persistence {
+        storagePid = {$plugin.tx_mdfullcalendar_cal.persistence.storagePid}
+        #recursive = 1
+    }
+
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+
+    settings {
+        dateFormat = d.m.Y
+        timeFormat = H:i
+
+        pid {
+            defaultDetailPid =
+        }
+
+        # if you enable this, make sure that you have set "defaultDetailPid" and there is a
+        # ext:calendarize plugin inserted on that page.
+        showIcsIcalButton = 0
+    }
+}
+
+page {
+    includeCSS {
+        mdFullcalendar = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/core/main.min.css
+        mdFullcalendar10 = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/daygrid/main.min.css
+        mdFullcalendar20 = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/timegrid/main.min.css
+    }
+
+    includeJSFooterlibs {
+        mdFullcalendar = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/core/main.min.js
+        mdFullcalendar10 = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/daygrid/main.min.js
+        mdFullcalendar20 = EXT:md_fullcalendar/Resources/Public/fullcalendar/packages/timegrid/main.min.js
+    }
+}
+
+CALENDAR_AJAX = PAGE
+CALENDAR_AJAX {
+    typeNum = 1573738558
+
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        debug = 0
+        admPanel = 0
+        additionalHeaders {
+            10 {
+                header = Content-Type: application/json
+                replace = 1
+            }
+        }
+    }
+
+    10 = USER_INT
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = MdFullcalendar
+        pluginName = Cal
+        vendorName = Mediadreams
+
+        switchableControllerActions {
+            Cal {
+                1 = list
+            }
+        }
+
+        settings < plugin.tx_mdfullcalendar_cal
+        persistence.storagePid = {$plugin.tx_mdfullcalendar_cal.persistence.storagePid}
+    }
+}
+
+CALENDAR_DETAIL_AJAX < CALENDAR_AJAX
+CALENDAR_DETAIL_AJAX {
+    typeNum = 1573760945
+
+    config.additionalHeaders {
+        10 {
+            header = Content-Type: text/html
+            replace = 1
+        }
+    }
+
+    10 {
+        switchableControllerActions.Cal.1 = detail
+    }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-11-14T10:40:11Z" product-name="md_fullcalendar">
+		<header/>
+		<body>
+			<trans-unit id="tx_mdfullcalendar_domain_model_cal">
+				<source>Cal</source>
+			</trans-unit>
+
+			<trans-unit id="filter_calendars">
+				<source>Filter calendars</source>
+			</trans-unit>
+			<trans-unit id="all_calendars">
+				<source>All calendars</source>
+			</trans-unit>
+			<trans-unit id="close">
+				<source>Close</source>
+			</trans-unit>
+			<trans-unit id="ics_ical">
+				<source>ICS/iCal</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
