@@ -85,7 +85,7 @@ CALENDAR_AJAX {
         }
 
         settings < plugin.tx_mdfullcalendar_cal
-        persistence.storagePid = {$plugin.tx_mdfullcalendar_cal.persistence.storagePid}
+        persistence.storagePid < plugin.tx_mdfullcalendar_cal.persistence.storagePid
     }
 }
 
