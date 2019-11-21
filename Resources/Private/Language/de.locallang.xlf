@@ -10,12 +10,11 @@
 
             <trans-unit id="filter_calendars">
                 <source>Filter calendars</source>
-                <target>Filter calendars</target>
-            </trans-unit>
+                <target>Kalenderfilter</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
-                <target>Close</target>
+                <target>Schließen</target>
             </trans-unit>
             <trans-unit id="ics_ical">
                 <source>ICS/iCal</source>
