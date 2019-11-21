@@ -7,12 +7,14 @@
 			<div id="calendar{contentObject.uid}" class="col-md-{f:if(condition: '{categories}', then: '9', else: '12')}"></div>
 
 			<f:if condition="{categories}">
-				<div id="categoryFilter{contentObject.uid}" class="category-filter col-md-3">
+				<div id="categoryFilter{contentObject.uid}" class="category-filter col-md-3 mt-5">
 					<p>{f:translate(key: 'filter_calendars', extensionName: 'MdFullcalendar')}</p>
 					<f:for each="{categories}" as="category">
-						<div class="form-check category{category.uid}">
-							<input type="checkbox" value="category{category.uid}" name="categoryFilter{contentObject.uid}" class="form-check-input" id="cf{contentObject.uid}_{category.uid}">
-							<label class="form-check-label" for="cf{contentObject.uid}_{category.uid}">{category.title}</label>
+						<div class="form-check category{category.uid} border border-white rounded">
+							<div class="p-1">
+								<input type="checkbox" value="category{category.uid}" name="categoryFilter{contentObject.uid}" class="form-check-input" id="cf{contentObject.uid}_{category.uid}">
+								<label class="form-check-label" for="cf{contentObject.uid}_{category.uid}">{category.title}</label>
+							</div>
 						</div>
 					</f:for>
 				</div>
