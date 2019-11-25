@@ -28,7 +28,7 @@ class CalController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
      */
-    protected $categoryRespoitory;
+    protected $categoryRepository;
 
     /**
      * Inject the index repository to enable Dependency Injection
@@ -43,11 +43,11 @@ class CalController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Inject the category repository to enable Dependency Injection
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRespoitory
+     * @param \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository
      */
-    public function injectCategoryRepository(\TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRespoitory)
+    public function injectCategoryRepository(\TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository)
     {
-        $this->categoryRespoitory = $categoryRespoitory;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -63,7 +63,7 @@ class CalController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         if ($this->settings['category']) {
-            $allCategories = $this->categoryRespoitory->findByParent($this->settings['category']);
+            $allCategories = $this->categoryRepository->findByParent($this->settings['category']);
             $this->view->assign('categories', $allCategories);
         }
 
