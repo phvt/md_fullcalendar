@@ -35,8 +35,9 @@
 
 		<script type="text/javascript">
 			document.addEventListener('DOMContentLoaded', function() {
-				var calendarEl<f:format.raw>{contentObject.uid}</f:format.raw> = document.getElementById('calendar<f:format.raw>{contentObject.uid}</f:format.raw>');
-				var calModal = $('#calModal<f:format.raw>{contentObject.uid}</f:format.raw>');
+				var calendarEl<f:format.raw>{contentObject.uid}</f:format.raw> = document.getElementById('calendar<f:format.raw>{contentObject.uid}</f:format.raw>'),
+					calModal = $('#calModal<f:format.raw>{contentObject.uid}</f:format.raw>'),
+					filtersActive = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw>').length;
 
 				var calendar<f:format.raw>{contentObject.uid}</f:format.raw> = new FullCalendar.Calendar(calendarEl<f:format.raw>{contentObject.uid}</f:format.raw>, {
 					firstDay: 1,
@@ -63,6 +64,25 @@
 						// add title attribute
 						$(item.el).prop('title', item.event.extendedProps.abstract);
 
+						// FILTER
+						if(filtersActive) {
+							var selectedCategories = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> input:checked').map(function() {
+								return $(this).val();
+							}).get();
+
+							if (selectedCategories.length > 0) {
+								// initially hide all elements
+								$(item.el).addClass('d-none');
+
+								selectedCategories.forEach(function(selectedVal) {
+									if ( $(item.el).hasClass(selectedVal) ) {
+										$(item.el).removeClass('d-none');
+									}
+								});
+							}
+						}
+
+
 						if (typeof $.fn.modal === 'function' && $.fn.modal !== null) {
 							// add click event for modal
 							$(item.el).on('click', function(e) {
@@ -87,7 +107,7 @@
 
 				// category filter
 				$('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> [type=checkbox]').on('change', function() {
-					var selectedCategories = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> input:checked').map(function(){
+					var selectedCategories = $('#categoryFilter<f:format.raw>{contentObject.uid}</f:format.raw> input:checked').map(function() {
 						return $(this).val();
 					}).get();
 
