@@ -2,7 +2,7 @@
     "name": "mediadreams/md_fullcalendar",
     "type": "typo3-cms-extension",
     "description": "This extension brings the FullCalendar.io with switchable views for month, week and day to ext:calendarize. It is also possible to filter calendars by categories.",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "license": "GPL-2.0-or-later",
     "keywords": [
         "TYPO3",
